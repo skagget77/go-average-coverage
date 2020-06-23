@@ -11,7 +11,7 @@ import (
 var covRex *regexp.Regexp = regexp.MustCompile(`coverage: (\d+\.?\d*)% of statements`)
 
 func main() {
-	coverages := make([]float64, 16)
+	coverages := make([]float64, 0, 16)
 	for in := bufio.NewScanner(os.Stdin); in.Scan(); {
 		if matches := covRex.FindStringSubmatch(in.Text()); matches != nil {
 			coverage, err := strconv.ParseFloat(matches[1], 64)
@@ -29,5 +29,5 @@ func main() {
 		average += coverage / float64(len(coverages))
 	}
 
-	fmt.Printf("average coverage: %v%% of statements\n", average)
+	fmt.Printf("average coverage: %.1f%% of statements\n", average)
 }
